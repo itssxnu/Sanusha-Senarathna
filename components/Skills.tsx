@@ -105,10 +105,9 @@ export default function Skills() {
     const particles: Particle[] = [];
     const particleCount = 60;
     const connectionDistance = 110;
-    const mouseDistance = 160;
 
-    let mouseX: number | null = null;
-    let mouseY: number | null = null;
+    let width = 0;
+    let height = 0;
 
     class Particle {
       x: number;
@@ -129,23 +128,7 @@ export default function Skills() {
         this.color = Math.random() > 0.5 ? "0, 245, 196" : "189, 0, 255";
       }
 
-      update(w: number, h: number, mx: number | null, my: number | null) {
-        // Handle mouse attraction force
-        if (mx !== null && my !== null) {
-          const dx = mx - this.x;
-          const dy = my - this.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < mouseDistance) {
-            const force = (mouseDistance - dist) / mouseDistance;
-            this.vx += (dx / dist) * force * 0.035;
-            this.vy += (dy / dist) * force * 0.035;
-          }
-        }
-
-        // Apply friction/drag to attraction velocity to keep particles under control
-        this.vx *= 0.98;
-        this.vy *= 0.98;
-
+      update(w: number, h: number) {
         // Base velocity
         this.x += this.vx + (this.vx > 0 ? 0.08 : -0.08);
         this.y += this.vy + (this.vy > 0 ? 0.08 : -0.08);
@@ -168,18 +151,21 @@ export default function Skills() {
 
     const resize = () => {
       const rect = container.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+
       // Account for device pixel ratio for super crisp rendering
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      canvas.style.width = `${rect.width}px`;
-      canvas.style.height = `${rect.height}px`;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
       ctx.scale(dpr, dpr);
 
       // Re-populate if resizing changes container dimensions significantly
       if (particles.length === 0) {
         for (let i = 0; i < particleCount; i++) {
-          particles.push(new Particle(rect.width, rect.height));
+          particles.push(new Particle(width, height));
         }
       }
     };
@@ -188,45 +174,13 @@ export default function Skills() {
     resize();
     window.addEventListener("resize", resize);
 
-    // Mouse events bound to container
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      mouseX = e.clientX - rect.left;
-      mouseY = e.clientY - rect.top;
-    };
-
-    const handleMouseLeave = () => {
-      mouseX = null;
-      mouseY = null;
-    };
-
-    container.addEventListener("mousemove", handleMouseMove);
-    container.addEventListener("mouseleave", handleMouseLeave);
-
     // Main animation loop
     const animate = () => {
-      const rect = container.getBoundingClientRect();
-      ctx.clearRect(0, 0, rect.width, rect.height);
+      ctx.clearRect(0, 0, width, height);
 
       // Draw connections first (layering behind nodes)
       for (let i = 0; i < particles.length; i++) {
         const p1 = particles[i];
-        
-        // Connect to mouse
-        if (mouseX !== null && mouseY !== null) {
-          const dx = mouseX - p1.x;
-          const dy = mouseY - p1.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < mouseDistance) {
-            const alpha = (1 - dist / mouseDistance) * 0.16;
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(mouseX, mouseY);
-            ctx.strokeStyle = `rgba(0, 245, 196, ${alpha})`;
-            ctx.lineWidth = 0.85;
-            ctx.stroke();
-          }
-        }
 
         // Connect to other particles
         for (let j = i + 1; j < particles.length; j++) {
@@ -251,7 +205,7 @@ export default function Skills() {
 
       // Update and draw particles
       particles.forEach((p) => {
-        p.update(rect.width, rect.height, mouseX, mouseY);
+        p.update(width, height);
         p.draw(ctx);
       });
 
@@ -263,8 +217,6 @@ export default function Skills() {
     // Clean up to prevent leaks
     return () => {
       window.removeEventListener("resize", resize);
-      container.removeEventListener("mousemove", handleMouseMove);
-      container.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
