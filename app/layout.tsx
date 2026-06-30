@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -28,6 +29,14 @@ export default function RootLayout({
     <html lang="en" className="h-full antialiased">
       <body className={`${outfit.variable} ${jetbrainsMono.variable} min-h-full flex flex-col`}>
         {children}
+        <Script
+          src="/scripts/html2canvas.min.js"
+          strategy="beforeInteractive"
+        />
+        <Script
+          src="/scripts/liquidGL.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

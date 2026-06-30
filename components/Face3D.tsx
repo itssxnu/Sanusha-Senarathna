@@ -138,6 +138,7 @@ export default function Face3D() {
 
   return (
     <div
+      data-liquid-ignore=""
       className="face-canvas-wrap w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] md:w-[450px] md:h-[450px] lg:w-[500px] lg:h-[500px]"
       onPointerEnter={() => {
         isHovered.current = true;

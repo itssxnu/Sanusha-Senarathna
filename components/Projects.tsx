@@ -121,13 +121,18 @@ export default function Projects() {
 
       {activeProject && createPortal(
         <div
+          data-lenis-prevent=""
           className="project-modal"
           role="dialog"
           aria-modal="true"
           aria-labelledby="project-modal-title"
           onMouseDown={() => setActiveProject(null)}
         >
-          <div className="project-modal-panel" onMouseDown={(event) => event.stopPropagation()}>
+          <div 
+            data-lenis-prevent=""
+            className="project-modal-panel" 
+            onMouseDown={(event) => event.stopPropagation()}
+          >
             <button
               className="modal-close"
               onClick={() => setActiveProject(null)}

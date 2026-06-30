@@ -278,7 +278,7 @@ export default function Skills() {
 
       <div className="tech-stack-container" ref={containerRef}>
         {/* Dynamic Canvas Neural Network Animation background */}
-        <canvas className="tech-canvas" ref={canvasRef} aria-hidden="true" />
+        <canvas data-liquid-ignore="" className="tech-canvas" ref={canvasRef} aria-hidden="true" />
         
         {/* Ambient spotlight glowing overlay backing the grid */}
         <div className="tech-backlight" aria-hidden="true" />

@@ -26,6 +26,41 @@ export default function PortfolioEffects() {
     };
     lenisRafId = requestAnimationFrame(scrollRaf);
 
+    // Initialize WebGL liquid glass effects
+    const initLiquidGL = () => {
+      if (typeof (window as any).liquidGL === "function") {
+        (window as any).liquidGL({
+          snapshot: "body",
+          target: ".navbar",
+          resolution: 1.5,
+          refraction: 0.02,
+          bevelDepth: 0.06,
+          bevelWidth: 0.1,
+          frost: 2.0,
+          shadow: true,
+          specular: true,
+          reveal: "fade",
+          tilt: false,
+        });
+
+        if ((window as any).liquidGL.syncWith) {
+          (window as any).liquidGL.syncWith({ lenis: lenis });
+        }
+        return true;
+      }
+      return false;
+    };
+
+    let liquidInterval: any;
+    if (!initLiquidGL()) {
+      liquidInterval = setInterval(() => {
+        if (initLiquidGL()) {
+          clearInterval(liquidInterval);
+        }
+      }, 100);
+      setTimeout(() => clearInterval(liquidInterval), 4000);
+    }
+
     const dot = document.createElement("div");
     const ring = document.createElement("div");
     dot.id = "cur-dot";
@@ -230,6 +265,14 @@ export default function PortfolioEffects() {
       if (typeTimeout === 0) {
         typeTimeout = window.setTimeout(type, 200);
       }
+      
+      // Trigger WebGL snapshot recapture after entrance fade-ins settle
+      window.setTimeout(() => {
+        const renderer = (window as any).__liquidGLRenderer__;
+        if (renderer && typeof renderer.captureSnapshot === "function") {
+          renderer.captureSnapshot();
+        }
+      }, 1000);
     };
 
     if (document.body.classList.contains("site-loaded")) {
@@ -254,6 +297,7 @@ export default function PortfolioEffects() {
       ring.remove();
       lenis.destroy();
       cancelAnimationFrame(lenisRafId);
+      if (liquidInterval) clearInterval(liquidInterval);
     };
   }, []);
 
