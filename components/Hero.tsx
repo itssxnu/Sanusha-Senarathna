@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Marquee from "./Marquee";
 
 const Face3D = dynamic(() => import("./Face3D"), {
   ssr: false,
@@ -74,6 +75,18 @@ export default function Hero() {
         </div>
 
       </div>
+
+      <div className="hero-scroll-indicator">
+        <span className="scroll-text">Scroll to explore</span>
+        <div className="scroll-mouse-wrap">
+          <div className="scroll-radar"></div>
+          <div className="scroll-mouse">
+            <div className="scroll-wheel"></div>
+          </div>
+        </div>
+      </div>
+
+      <Marquee />
     </section>
   );
 }

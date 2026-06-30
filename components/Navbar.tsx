@@ -21,13 +21,27 @@ export default function Navbar() {
         progressBarRef.current.style.width = `${progress}%`;
       }
 
-      // Show/hide floating CV button past the hero page (approx 400px)
+      // Show/hide floating CV button
       if (floatingCvRef.current) {
-        if (scrollY > 400) {
+        let shouldBeVisible = scrollY > 400;
+
+        // Hide it if we enter the Contact section (which sits right above the footer)
+        const contactEl = document.querySelector("#contact");
+        if (contactEl) {
+          const contactRect = contactEl.getBoundingClientRect();
+          if (contactRect.top < winHeight - 80) {
+            shouldBeVisible = false;
+          }
+        }
+
+        if (shouldBeVisible) {
           floatingCvRef.current.classList.add("visible");
         } else {
           floatingCvRef.current.classList.remove("visible");
         }
+
+        // Reset bottom style to keep inline styles clean
+        floatingCvRef.current.style.bottom = "";
       }
     };
 
@@ -81,6 +95,7 @@ export default function Navbar() {
           <li><a href="#about">About</a></li>
           <li><a href="#skills">Skills</a></li>
           <li><a href="#projects">Work</a></li>
+          <li><a href="#experience">Experience</a></li>
           <li><a href="#education">Education</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>

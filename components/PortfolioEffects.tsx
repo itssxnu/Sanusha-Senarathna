@@ -44,19 +44,24 @@ const phrases = [
 
 export default function PortfolioEffects() {
   useEffect(() => {
-    // Initialize Lenis smooth scroll
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-
+    // Initialize Lenis smooth scroll only on desktop viewports (>1000px)
+    const isDesktop = typeof window !== "undefined" && window.innerWidth > 1000;
+    let lenis: Lenis | null = null;
     let lenisRafId = 0;
-    const scrollRaf = (time: number) => {
-      lenis.raf(time);
+
+    if (isDesktop) {
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+      });
+
+      const scrollRaf = (time: number) => {
+        lenis?.raf(time);
+        lenisRafId = requestAnimationFrame(scrollRaf);
+      };
       lenisRafId = requestAnimationFrame(scrollRaf);
-    };
-    lenisRafId = requestAnimationFrame(scrollRaf);
+    }
     const liquidTimeouts: number[] = [];
     let liquidInterval = 0;
 
@@ -94,12 +99,8 @@ export default function PortfolioEffects() {
         ".hero, .section-band, .marquee-band, .tech-stack-container",
       );
 
-      if (window.liquidGL.syncWith) {
+      if (window.liquidGL.syncWith && lenis) {
         window.liquidGL.syncWith({ lenis });
-        if (lenisRafId) {
-          cancelAnimationFrame(lenisRafId);
-          lenisRafId = 0;
-        }
       }
       return true;
     };
@@ -316,19 +317,6 @@ export default function PortfolioEffects() {
       if (typeTimeout === 0) {
         typeTimeout = window.setTimeout(type, 200);
       }
-      
-
-
-      // Trigger WebGL snapshot recaptures after entrance animations and lazy assets settle
-      const recaptureTimes = [1000, 2500, 5000];
-      recaptureTimes.forEach((delay) => {
-        window.setTimeout(() => {
-          const renderer = (window as any).__liquidGLRenderer__;
-          if (renderer && typeof renderer.captureSnapshot === "function") {
-            renderer.captureSnapshot();
-          }
-        }, delay);
-      });
     };
 
     if (document.body.classList.contains("site-loaded")) {
@@ -351,7 +339,7 @@ export default function PortfolioEffects() {
       });
       dot.remove();
       ring.remove();
-      lenis.destroy();
+      lenis?.destroy();
       cancelAnimationFrame(lenisRafId);
       if (liquidInterval) window.clearInterval(liquidInterval);
       liquidTimeouts.forEach((timeout) => window.clearTimeout(timeout));

@@ -1,0 +1,310 @@
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 1000px) {
+  .proj-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.proj-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--dim);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  padding: 2.25rem 2rem;
+  color: inherit;
+  text-align: left;
+  cursor: none;
+  transition:
+    border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+    box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.proj-card:hover {
+  border-color: rgba(0, 245, 196, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 
+    0 12px 30px rgba(0, 0, 0, 0.45),
+    0 0 20px rgba(0, 245, 196, 0.08);
+}
+
+.proj-name {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.2;
+}
+
+.proj-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.proj-card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform: scaleX(0);
+  transition: transform 0.4s;
+}
+
+.proj-card:hover::before {
+  transform: scaleX(1);
+}
+
+.proj-preview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  min-height: 76px;
+  padding: 1px;
+  overflow: hidden;
+  background: linear-gradient(90deg, transparent, rgba(0, 245, 196, 0.24), transparent);
+  border: 1px solid rgba(0, 245, 196, 0.1);
+  border-radius: 8px;
+}
+
+.proj-preview span {
+  display: grid;
+  place-items: center;
+  color: rgba(0, 245, 196, 0.72);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  background:
+    linear-gradient(180deg, rgba(0, 245, 196, 0.08), transparent),
+    var(--bg);
+  transition:
+    color 0.25s,
+    background 0.25s,
+    transform 0.25s;
+}
+
+.proj-card:hover .proj-preview span {
+  color: var(--bg);
+  background: var(--accent);
+}
+
+.proj-card:hover .proj-preview span:nth-child(2) {
+  transform: translateY(-5px);
+}
+
+.proj-id {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+}
+
+.proj-arrow {
+  color: var(--dim);
+  font-size: 16px;
+  transition:
+    color 0.2s,
+    transform 0.2s;
+}
+
+.proj-card:hover .proj-arrow {
+  color: var(--accent);
+  transform: translate(3px, -3px);
+}
+
+.proj-desc {
+  flex: 1;
+  margin: 0;
+  color: rgba(74, 96, 112, 0.9);
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+/* Project Modal Box */
+.project-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background:
+    radial-gradient(circle at 28% 34%, rgba(0, 245, 196, 0.1), transparent 34%),
+    rgba(4, 7, 10, 0.96);
+  backdrop-filter: blur(10px);
+  animation: modalFade 0.2s ease;
+}
+
+.project-modal-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(320px, 1.1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  width: min(1180px, 100%);
+  max-height: 100vh;
+  overflow: auto;
+  padding: clamp(5rem, 8vw, 7rem) 3rem 4rem;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.project-modal-panel::-webkit-scrollbar {
+  display: none;
+}
+
+.modal-close {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  z-index: 2;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  color: var(--accent);
+  font-size: 24px;
+  line-height: 1;
+  background: var(--bg);
+  border: 1px solid var(--dim);
+}
+
+.modal-preview {
+  display: grid;
+  min-height: 360px;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(0, 245, 196, 0.12), transparent 38%),
+    linear-gradient(135deg, rgba(0, 170, 255, 0.12), transparent 52%),
+    var(--bg);
+  border: 1px solid rgba(0, 245, 196, 0.14);
+  box-shadow: inset 0 0 60px rgba(0, 245, 196, 0.04);
+}
+
+.modal-screen {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  width: min(88%, 360px);
+  aspect-ratio: 1.18;
+  padding: 1px;
+  background: rgba(0, 245, 196, 0.24);
+  box-shadow: 0 0 60px rgba(0, 245, 196, 0.12);
+}
+
+.modal-screen::before {
+  position: absolute;
+  inset: -18px;
+  content: "";
+  border: 1px solid rgba(0, 245, 196, 0.16);
+  transform: rotate(-4deg);
+}
+
+.modal-screen span {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  color: var(--bg);
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 3vw, 1.7rem);
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  background: var(--accent);
+  animation: screenPulse 1.8s ease-in-out infinite alternate;
+}
+
+.modal-copy {
+  min-width: 0;
+  align-self: center;
+  padding: 0;
+}
+
+.modal-copy h3 {
+  margin: 0.75rem 0 1rem;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3.3rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.modal-copy p {
+  margin: 0 0 1rem;
+  color: rgba(220, 232, 240, 0.64);
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.modal-role {
+  color: var(--accent) !important;
+}
+
+.modal-copy ul {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0;
+  margin: 1.5rem 0;
+  list-style: none;
+}
+
+.modal-copy li {
+  position: relative;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.modal-copy li::before {
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  content: ">";
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+@keyframes modalFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes screenPulse {
+  from {
+    filter: brightness(0.86);
+    transform: translateY(0);
+  }
+  to {
+    filter: brightness(1.12);
+    transform: translateY(-6px);
+  }
+}

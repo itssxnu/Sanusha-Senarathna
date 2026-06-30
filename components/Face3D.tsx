@@ -75,6 +75,7 @@ function ParticleFace({ isHovered }: { isHovered: React.RefObject<boolean> }) {
       ref={pointsRef}
       geometry={geometry}
       scale={12}
+      position={[0, -0.28, 0]}
       rotation={[Math.PI / 2, Math.PI, -Math.PI]}
     >
       <pointsMaterial
@@ -146,7 +147,7 @@ export default function Face3D() {
       }}
     >
 
-      <Canvas camera={{ position: [0, 0, 3], fov: 45 }}>
+      <Canvas camera={{ position: [0, 0, 3], fov: 45 }} style={{ background: "transparent" }}>
         <ambientLight intensity={1.5} />
         <directionalLight
           position={[5, 5, 5]}

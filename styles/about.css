@@ -1,0 +1,210 @@
+.about-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 480px);
+  gap: 5rem;
+  align-items: center;
+}
+
+.about-body p {
+  max-width: 700px;
+  margin: 0 0 1.2rem;
+  color: rgba(220, 232, 240, 0.6);
+  font-size: 16px;
+  line-height: 1.95;
+}
+
+.about-body strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.about-counters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  max-width: 720px;
+  margin-top: 2.5rem;
+  background: var(--dim);
+  border: 1px solid var(--dim);
+}
+
+.counter-box {
+  min-width: 0;
+  padding: 1.75rem 1.25rem;
+  background: var(--bg);
+}
+
+.counter-n {
+  display: block;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.counter-l {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.about-photo-container {
+  position: relative;
+  width: min(100%, 480px);
+  aspect-ratio: 0.85;
+  justify-self: end;
+  overflow: hidden;
+  padding: 1rem;
+  border: 1px solid rgba(0, 245, 196, 0.15);
+  background: 
+    radial-gradient(circle at center, rgba(0, 245, 196, 0.12) 0%, transparent 70%),
+    linear-gradient(135deg, var(--surface) 0%, var(--bg2) 100%);
+  border-radius: 4px;
+  box-shadow: inset 0 0 20px rgba(0, 245, 196, 0.05);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-photo-container:hover {
+  border-color: var(--accent);
+  box-shadow: 
+    inset 0 0 20px rgba(0, 245, 196, 0.1),
+    0 0 30px rgba(0, 245, 196, 0.15);
+}
+
+.about-photo-container::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background-image: 
+    linear-gradient(rgba(0, 245, 196, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 196, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 1;
+  -webkit-mask-image: radial-gradient(circle at center, transparent 10%, black 70%);
+  mask-image: radial-gradient(circle at center, transparent 10%, black 70%);
+}
+
+.about-photo {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  opacity: 1;
+  filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.4));
+  transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+}
+
+.about-photo-container:hover .about-photo {
+  opacity: 1;
+  filter: drop-shadow(0 12px 40px rgba(0, 0, 0, 0.65));
+  transform: scale(1.02);
+}
+
+.corner-bracket {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--accent);
+  z-index: 4;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.about-photo-container:hover .corner-bracket {
+  opacity: 1;
+}
+
+.top-left {
+  top: 12px;
+  left: 12px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.top-right {
+  top: 12px;
+  right: 12px;
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.bottom-left {
+  bottom: 12px;
+  left: 12px;
+  border-right: 0;
+  border-top: 0;
+}
+
+.bottom-right {
+  bottom: 12px;
+  right: 12px;
+  border-left: 0;
+  border-top: 0;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.2) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 1;
+  opacity: 0.1;
+}
+
+/* About CV Details Upgrades */
+.about-cv-grid {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.about-subheading-mono {
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-family: var(--font-mono-app);
+}
+
+.about-cv-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.about-cv-list.soft-skills {
+  gap: 0.6rem;
+}
+
+.about-cv-item {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.about-cv-item strong {
+  color: var(--text);
+  display: block;
+}
+
+.about-cv-bullet {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}

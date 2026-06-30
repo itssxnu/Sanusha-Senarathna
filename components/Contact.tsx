@@ -13,7 +13,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="section-band section-alt">
-      <div className="section-label rv">05</div>
+      <div className="section-label rv">06</div>
       <h2 className="s-title rv">
         Get In <em>Touch</em>
       </h2>

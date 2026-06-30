@@ -1,0 +1,151 @@
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 5rem;
+  align-items: center;
+}
+
+.contact-grid-modern {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(2rem, 6vw, 6rem);
+  margin-top: 3.5rem;
+  align-items: flex-start;
+}
+
+.c-title-modern {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2rem;
+  letter-spacing: -0.015em;
+}
+
+.contact-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.contact-info-item,
+.contact-info-item-static {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  color: var(--text);
+  font-family: var(--font-mono-app);
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-info-item:hover {
+  color: var(--accent);
+}
+
+.contact-info-icon {
+  color: var(--muted);
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.contact-info-item:hover .contact-info-icon {
+  color: var(--accent);
+}
+
+.contact-action-row {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn-resume-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.75rem;
+  background-color: rgba(6, 12, 20, 0.25) !important;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.012'/%3E%3C/svg%3E");
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  color: var(--text);
+  font-family: var(--font-mono-app);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.22), 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-resume-download:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 245, 196, 0.15),
+              inset 0 1px 1px rgba(255, 255, 255, 0.35);
+}
+
+/* Redesigned Premium Contact Form */
+.cform {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.fg {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fg label {
+  color: var(--muted);
+  font-size: 10px;
+  font-family: var(--font-mono-app);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.fg input,
+.fg textarea {
+  padding: 0.9rem 1.25rem;
+  color: var(--text);
+  font-family: var(--font-mono-app);
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fg input:focus,
+.fg textarea:focus {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 0 15px rgba(0, 245, 196, 0.1),
+              inset 0 1px 0.5px rgba(255, 255, 255, 0.05);
+}
+
+.fg textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.cform .btn-primary {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .contact-grid-modern {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+}
