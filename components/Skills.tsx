@@ -102,7 +102,7 @@ export default function Skills() {
     if (!ctx) return;
 
     let animationFrameId: number;
-    let particles: Particle[] = [];
+    const particles: Particle[] = [];
     const particleCount = 60;
     const connectionDistance = 110;
     const mouseDistance = 160;

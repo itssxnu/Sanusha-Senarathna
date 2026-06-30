@@ -64,7 +64,7 @@ export default function Loader() {
           }
 
           // Trigger a DOM repaint
-          loaderText.offsetHeight;
+          void loaderText.offsetHeight;
 
           // Animate to destination
           requestAnimationFrame(() => {
@@ -129,6 +129,7 @@ export default function Loader() {
   return (
     <div
       ref={overlayRef}
+      data-liquid-ignore
       style={{
         position: "fixed",
         inset: 0,

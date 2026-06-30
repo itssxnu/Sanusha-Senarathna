@@ -492,7 +492,11 @@
             await new Promise((resolve) => setTimeout(resolve, delayMs));
             return await attemptCapture(attempt + 1, maxAttempts, delayMs);
           } else {
-            console.error("liquidGL: All snapshot attempts failed.", e);
+            console.error("liquidGL: All snapshot attempts failed. Revealing fallback lenses.", e);
+            if (this._pendingReveal && this._pendingReveal.length) {
+              this._pendingReveal.forEach((ln) => ln._reveal());
+              this._pendingReveal.length = 0;
+            }
             return false;
           }
         } finally {
@@ -573,6 +577,15 @@
       } else {
         lens._reveal();
       }
+
+      // Fail-safe: if the lens hasn't been revealed after 2.5 seconds, force reveal it.
+      setTimeout(() => {
+        if (lens._revealProgress === 0) {
+          console.warn("liquidGL: Reveal timed out. Forcing lens fallback visibility.");
+          lens._reveal();
+        }
+      }, 2500);
+
       return lens;
     }
 
@@ -1382,7 +1395,9 @@
       this.originalOpacity = this.el.style.opacity;
       this.originalTransition = this.el.style.transition;
       this.el.style.transition = "none";
-      this.el.style.opacity = 0;
+      if (this.revealTypeIndex === 1) {
+        this.el.style.opacity = 0;
+      }
 
       this.el.style.position =
         this.el.style.position === "static"

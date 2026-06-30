@@ -1,10 +1,12 @@
 "use client";
 
+import type { PointerEvent } from "react";
 import { useEffect, useRef } from "react";
 
 export default function Navbar() {
   const progressBarRef = useRef<HTMLDivElement>(null);
   const floatingCvRef = useRef<HTMLAnchorElement>(null);
+  const navbarRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,6 +40,22 @@ export default function Navbar() {
     };
   }, []);
 
+  const handleGlassPointerMove = (event: PointerEvent<HTMLElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+    event.currentTarget.style.setProperty("--glass-x", `${x}%`);
+    event.currentTarget.style.setProperty("--glass-y", `${y}%`);
+    event.currentTarget.style.setProperty("--glass-shine", "1");
+  };
+
+  const handleGlassPointerLeave = (event: PointerEvent<HTMLElement>) => {
+    event.currentTarget.style.setProperty("--glass-x", "22%");
+    event.currentTarget.style.setProperty("--glass-y", "0%");
+    event.currentTarget.style.setProperty("--glass-shine", "0");
+  };
+
   return (
     <>
       {/* Scroll Progress Bar - fixed to top of viewport */}
@@ -47,8 +65,15 @@ export default function Navbar() {
         aria-hidden="true"
       />
 
-      <nav className="navbar">
-        <div className="nav-logo" style={{ opacity: 0 }}>
+      <nav
+        ref={navbarRef}
+        className="navbar liquidGL"
+        onPointerMove={handleGlassPointerMove}
+        onPointerLeave={handleGlassPointerLeave}
+      >
+        <span className="nav-glass-liquid" aria-hidden="true" />
+
+        <div className="nav-logo">
           <a href="#hero">SXNU.dev</a>
         </div>
 

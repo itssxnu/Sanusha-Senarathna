@@ -97,25 +97,23 @@ function isWebGLAvailable() {
       window.WebGLRenderingContext &&
       (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
     );
-  } catch (e) {
+  } catch {
     return false;
   }
 }
 
 export default function Face3D() {
   const isHovered = useRef(false);
-  const [hasWebGL, setHasWebGL] = useState(true);
+  const [hasWebGL] = useState(() => isWebGLAvailable());
 
   useEffect(() => {
-    const available = isWebGLAvailable();
-    setHasWebGL(available);
-    if (!available) {
+    if (!hasWebGL) {
       // Trigger loader exit event if WebGL is missing
       if (typeof window !== "undefined") {
         window.dispatchEvent(new Event("model-loaded"));
       }
     }
-  }, []);
+  }, [hasWebGL]);
 
   const handleModelLoaded = () => {
     if (typeof window !== "undefined") {

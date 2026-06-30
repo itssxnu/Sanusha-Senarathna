@@ -3,6 +3,38 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 
+type LiquidGLInstance = unknown;
+
+type LiquidGLApi = {
+  (options: {
+    snapshot?: string;
+    target: string;
+    resolution?: number;
+    refraction?: number;
+    bevelDepth?: number;
+    bevelWidth?: number;
+    frost?: number;
+    shadow?: boolean;
+    specular?: boolean;
+    reveal?: "none" | "fade";
+    tilt?: boolean;
+    tiltFactor?: number;
+    magnify?: number;
+    on?: {
+      init?: (instance: LiquidGLInstance) => void;
+    };
+  }): LiquidGLInstance | LiquidGLInstance[] | undefined;
+  registerDynamic?: (elements: string | Element[] | NodeListOf<Element>) => void;
+  syncWith?: (config?: { lenis?: Lenis; gsap?: boolean }) => void;
+};
+
+declare global {
+  interface Window {
+    liquidGL?: LiquidGLApi;
+    __portfolioLiquidNavReady__?: boolean;
+  }
+}
+
 const phrases = [
   "Data Science Undergrad.",
   "Web Developer.",
@@ -25,41 +57,60 @@ export default function PortfolioEffects() {
       lenisRafId = requestAnimationFrame(scrollRaf);
     };
     lenisRafId = requestAnimationFrame(scrollRaf);
+    const liquidTimeouts: number[] = [];
+    let liquidInterval = 0;
 
-    // Initialize WebGL liquid glass effects
-    const initLiquidGL = () => {
-      if (typeof (window as any).liquidGL === "function") {
-        (window as any).liquidGL({
-          snapshot: "body",
-          target: ".navbar",
-          resolution: 1.5,
-          refraction: 0.02,
-          bevelDepth: 0.06,
-          bevelWidth: 0.1,
-          frost: 2.0,
-          shadow: true,
-          specular: true,
-          reveal: "fade",
-          tilt: false,
-        });
+    const initLiquidGlass = () => {
+      if (window.__portfolioLiquidNavReady__) return true;
+      if (typeof window.liquidGL !== "function") return false;
 
-        if ((window as any).liquidGL.syncWith) {
-          (window as any).liquidGL.syncWith({ lenis: lenis });
+      const navbar = document.querySelector(".navbar.liquidGL");
+      if (!navbar) return false;
+
+      window.__portfolioLiquidNavReady__ = true;
+
+      window.liquidGL({
+        snapshot: "body",
+        target: ".navbar.liquidGL",
+        resolution: 1.15,
+        refraction: 0.045,
+        bevelDepth: 0.14,
+        bevelWidth: 0.12,
+        frost: 1.4,
+        shadow: true,
+        specular: true,
+        reveal: "none",
+        tilt: false,
+        tiltFactor: 2.2,
+        magnify: 1.03,
+        on: {
+          init() {
+            document.body.classList.add("liquid-nav-ready");
+          },
+        },
+      });
+
+      window.liquidGL.registerDynamic?.(
+        ".hero, .section-band, .marquee-band, .tech-stack-container",
+      );
+
+      if (window.liquidGL.syncWith) {
+        window.liquidGL.syncWith({ lenis });
+        if (lenisRafId) {
+          cancelAnimationFrame(lenisRafId);
+          lenisRafId = 0;
         }
-        return true;
       }
-      return false;
+      return true;
     };
 
-    let liquidInterval: any;
-    if (!initLiquidGL()) {
-      liquidInterval = setInterval(() => {
-        if (initLiquidGL()) {
-          clearInterval(liquidInterval);
-        }
-      }, 100);
-      setTimeout(() => clearInterval(liquidInterval), 4000);
-    }
+    // Start retrying WebGL glass initialization immediately on mount
+    liquidInterval = window.setInterval(() => {
+      if (initLiquidGlass()) {
+        window.clearInterval(liquidInterval);
+        liquidInterval = 0;
+      }
+    }, 50);
 
     const dot = document.createElement("div");
     const ring = document.createElement("div");
@@ -266,13 +317,18 @@ export default function PortfolioEffects() {
         typeTimeout = window.setTimeout(type, 200);
       }
       
-      // Trigger WebGL snapshot recapture after entrance fade-ins settle
-      window.setTimeout(() => {
-        const renderer = (window as any).__liquidGLRenderer__;
-        if (renderer && typeof renderer.captureSnapshot === "function") {
-          renderer.captureSnapshot();
-        }
-      }, 1000);
+
+
+      // Trigger WebGL snapshot recaptures after entrance animations and lazy assets settle
+      const recaptureTimes = [1000, 2500, 5000];
+      recaptureTimes.forEach((delay) => {
+        window.setTimeout(() => {
+          const renderer = (window as any).__liquidGLRenderer__;
+          if (renderer && typeof renderer.captureSnapshot === "function") {
+            renderer.captureSnapshot();
+          }
+        }, delay);
+      });
     };
 
     if (document.body.classList.contains("site-loaded")) {
@@ -297,7 +353,8 @@ export default function PortfolioEffects() {
       ring.remove();
       lenis.destroy();
       cancelAnimationFrame(lenisRafId);
-      if (liquidInterval) clearInterval(liquidInterval);
+      if (liquidInterval) window.clearInterval(liquidInterval);
+      liquidTimeouts.forEach((timeout) => window.clearTimeout(timeout));
     };
   }, []);
 
