@@ -3,6 +3,7 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import { Suspense, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import * as THREE from "three";
 
 function LoadNotifier({ onLoad }: { onLoad: () => void }) {
@@ -125,10 +126,12 @@ export default function Face3D() {
   if (!hasWebGL) {
     return (
       <div className="face-fallback-wrap">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
+        <Image 
           src="/profile2.png" 
-          alt="Sanusha Senarathna" 
+          alt="Sanusha Senarathna - 3D Points Particle Face Mesh Model Fallback Profile Graphic" 
+          width={400}
+          height={400}
+          priority
           className="face-fallback-img"
         />
       </div>

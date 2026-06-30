@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function About() {
   return (
     <section id="about" className="section-band">
@@ -83,10 +85,11 @@ export default function About() {
           <div className="corner-bracket bottom-left"></div>
           <div className="corner-bracket bottom-right"></div>
           <div className="scanlines"></div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img 
+          <Image 
             src="/profile2.png" 
-            alt="Sanusha Senarathna" 
+            alt="Sanusha Senarathna - Data Scientist and Full-Stack Software Developer Portfolio Profile" 
+            width={400}
+            height={400}
             className="about-photo"
           />
         </div>
