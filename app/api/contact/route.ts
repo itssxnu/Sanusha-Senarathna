@@ -37,7 +37,7 @@ export async function POST(request: Request) {
           <div style="margin-top: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 6px; border-left: 4px solid #00f5c4;">
             <p style="margin: 0; font-style: italic; line-height: 1.6; color: #333;">"${message.replace(/\n/g, "<br>")}"</p>
           </div>
-          <p style="margin-top: 20px; font-size: 11px; color: #888; border-top: 1px solid #eee; padding-top: 10px;">Sent via portfolio contact serverless route.</p>
+          <p style="margin-top: 20px; font-size: 11px; color: #888; border-top: 1px solid #eee; padding-top: 10px;">Sent via portfolio contact form.</p>
         </div>
       `,
     });

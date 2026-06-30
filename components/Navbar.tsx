@@ -109,7 +109,7 @@ export default function Navbar() {
       {/* Floating CV Button (bottom-right action CV download) */}
       <a
         ref={floatingCvRef}
-        href="/resume.pdf"
+        href="/Sanusha_Senarathna_Resume.pdf"
         download
         className="btn-floating-cv"
         aria-label="Download CV"

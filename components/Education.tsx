@@ -9,13 +9,13 @@ const entries = [
     period: "2024 — Present",
     degree: "BSc (Hons) in Data Science",
     school: "Sri Lanka Institute of Information Technology (SLIIT)",
-    tags: ["Data Science", "Machine Learning", "FastAPI", "Spring Boot"],
+    tags: ["Data Science", "Machine Learning", "Software Development",],
   },
   {
-    period: "2013 — 2021",
+    period: "2019 — 2023",
     degree: "GCE Advanced Level (Physical Science)",
     school: "Kingswood College, Kandy",
-    tags: ["Physics", "Combined Maths", "Chemistry", "General IT"],
+    tags: ["Physics", "Combined Maths", "IT"],
   },
 ];
 

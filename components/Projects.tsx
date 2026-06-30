@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 const projects = [
   {
     id: "PROJECT_01",
-    name: "RecruitAI – Enterprise CV Matching & Auditing",
+    name: "RecruitAI - Enterprise CV Matching & Auditing",
     desc: "A decoupled dual-service microservice platform built for enterprise resume parsing and candidate ranking. Features Gemini API schema mapping, vector-based similarity scoring, and demographic bias auditing.",
     stack: ["Java", "Spring Boot", "FastAPI", "MySQL", "SentenceTransformers", "Scikit-learn", "Gemini API"],
     role: "Architected the dual-service microservice platform, integrated Gemini API schema mapping, vector scoring pipelines, and demographic auditing algorithms.",

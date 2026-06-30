@@ -47,7 +47,7 @@ export default function Hero() {
             </a>
 
             <a 
-              href="/resume.pdf" 
+              href="/Sanusha_Senarathna_Resume.pdf" 
               download 
               className="btn-secondary btn-cv-download"
             >
