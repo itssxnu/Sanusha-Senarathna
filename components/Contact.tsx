@@ -4,11 +4,43 @@ import { FormEvent, useState } from "react";
 
 export default function Contact() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const sendForm = (event: FormEvent<HTMLFormElement>) => {
+  const sendForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSent(true);
-    window.setTimeout(() => setSent(false), 2500);
+    setSending(true);
+    setError(null);
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to send message.");
+      }
+
+      setSent(true);
+      form.reset();
+      window.setTimeout(() => setSent(false), 3000);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "An error occurred.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -67,19 +99,28 @@ export default function Contact() {
           <form className="cform" onSubmit={sendForm}>
             <div className="fg">
               <label htmlFor="name">Name</label>
-              <input id="name" type="text" placeholder="Your name" required />
+              <input id="name" name="name" type="text" placeholder="Your name" required />
             </div>
             <div className="fg">
               <label htmlFor="email">Email</label>
-              <input id="email" type="email" placeholder="your@email.com" required />
+              <input id="email" name="email" type="email" placeholder="your@email.com" required />
             </div>
             <div className="fg">
               <label htmlFor="message">Message</label>
-              <textarea id="message" placeholder="What's on your mind?" required></textarea>
+              <textarea id="message" name="message" placeholder="What's on your mind?" required></textarea>
             </div>
-            <button className={`btn btn-primary ${sent ? "is-sent" : ""}`} type="submit">
-              {sent ? "Sent ✓" : "Send Message →"}
+            <button 
+              className={`btn btn-primary ${sent ? "is-sent" : ""}`} 
+              type="submit"
+              disabled={sending}
+            >
+              {sending ? "Sending..." : sent ? "Sent ✓" : "Send Message →"}
             </button>
+            {error && (
+              <p style={{ color: "#ff4d4d", fontSize: "12px", marginTop: "0.5rem", fontFamily: "var(--font-mono-app)" }}>
+                Error: {error}
+              </p>
+            )}
           </form>
         </div>
       </div>

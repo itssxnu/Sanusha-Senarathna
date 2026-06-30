@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <footer>
       <div className="footer-left">
-        © 2026 <span>SANU</span> — SLIIT · Colombo, Sri Lanka
+        © 2026 <span>SXNU.dev</span> - Colombo, Sri Lanka
       </div>
       
       <div className="footer-socials">
@@ -18,7 +18,7 @@ export default function Footer() {
       </div>
 
       <div className="footer-right">
-        Designed & built by <span>Sanu</span>
+        Designed & built by <span>Sanusha Senarathna</span>
       </div>
     </footer>
   );
