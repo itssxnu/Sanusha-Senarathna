@@ -88,7 +88,9 @@ export default function Navbar() {
         <span className="nav-glass-liquid" aria-hidden="true" />
 
         <div className="nav-logo">
-          <a href="#hero">SXNU.dev</a>
+          <a href="#hero">
+            <span>SXNU</span><span style={{ color: "var(--accent)" }}>.dev</span>
+          </a>
         </div>
 
         <ul className="nav-links">

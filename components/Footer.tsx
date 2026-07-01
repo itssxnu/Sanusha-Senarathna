@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <footer>
       <div className="footer-left">
-        © 2026 <span>SXNU.dev</span> - Colombo, Sri Lanka
+        © 2026 <span style={{ color: "#fff" }}>SXNU</span><span>.dev</span> - Colombo, Sri Lanka
       </div>
       
       <div className="footer-socials">
