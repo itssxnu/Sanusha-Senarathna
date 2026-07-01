@@ -19,10 +19,8 @@
   --dim: #1a2836;
   --background: var(--bg);
   --foreground: var(--text);
-  --font-outfit: "Outfit", sans-serif;
-  --font-jetbrains-mono: "JetBrains Mono", monospace;
-  --font-display: var(--font-outfit), "Inter", "Segoe UI", Arial, Helvetica, sans-serif;
-  --font-mono-app: var(--font-jetbrains-mono), "SFMono-Regular", Consolas, "Courier New", monospace;
+  --font-display: var(--font-outfit, "Outfit"), "Inter", "Segoe UI", Arial, Helvetica, sans-serif;
+  --font-mono-app: var(--font-jetbrains-mono, "JetBrains Mono"), "SFMono-Regular", Consolas, "Courier New", monospace;
 }
 
 @theme inline {
