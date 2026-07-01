@@ -3,31 +3,31 @@ import "./globals.css";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "Sanusha Senarathna | Data Scientist & Full-Stack Developer",
-  description: "Portfolio of Sanusha Senarathna, Data Science undergraduate at SLIIT and full-stack software developer. Specialized in building intelligent AI systems, NLP, semantic search, and modern web apps.",
-  keywords: ["Sanusha Senarathna", "Sanu", "SLIIT", "Data Scientist", "Machine Learning Portfolio", "Full Stack Developer", "Software Engineer Colombo", "React Developer Sri Lanka"],
-  authors: [{ name: "Sanusha Senarathna" }],
-  creator: "Sanusha Senarathna",
+  title: "Sanusha Dilmin Senarathna | Data Science Undergraduate & AI/ML Developer / Full-Stack Developer",
+  description: "Portfolio of Sanusha Dilmin Senarathna, Data Science undergraduate at SLIIT and full-stack software developer. Specialized in building intelligent AI systems, NLP, semantic search, and modern web apps.",
+  keywords: ["Sanusha Dilmin Senarathna", "Sanu", "SLIIT", "Data Scientist", "Machine Learning Portfolio", "Full Stack Developer", "Software Engineer Colombo", "React Developer Sri Lanka"],
+  authors: [{ name: "Sanusha Dilmin Senarathna" }],
+  creator: "Sanusha Dilmin Senarathna",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://sanusha-senarathna.vercel.app",
-    title: "Sanusha Senarathna | Data Scientist & Full-Stack Developer",
-    description: "Portfolio of Sanusha Senarathna, Data Science undergraduate and full-stack software engineer. Building intelligent machine learning solutions and modern web applications.",
-    siteName: "Sanusha Senarathna Portfolio",
+    title: "Sanusha Dilmin Senarathna | Data Science Undergraduate & AI/ML Developer / Full-Stack Developer",
+    description: "Portfolio of Sanusha Dilmin Senarathna, Data Science undergraduate and full-stack software engineer. Building intelligent machine learning solutions and modern web applications.",
+    siteName: "Sanusha Dilmin Senarathna Portfolio",
     images: [
       {
         url: "https://sanusha-senarathna.vercel.app/og-img.png",
         width: 1200,
         height: 630,
-        alt: "Sanusha Senarathna - Portfolio Preview",
+        alt: "Sanusha Dilmin Senarathna - Portfolio Preview",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sanusha Senarathna | Data Scientist & Full-Stack Developer",
-    description: "Portfolio of Sanusha Senarathna, Data Science undergraduate and full-stack software engineer.",
+    title: "Sanusha Dilmin Senarathna | Data Science Undergraduate & AI/ML Developer / Full-Stack Developer",
+    description: "Portfolio of Sanusha Dilmin Senarathna, Data Science undergraduate and full-stack software engineer, AI/ML developer.",
     images: ["https://sanusha-senarathna.vercel.app/twitter.png"],
   },
   robots: {
@@ -66,18 +66,47 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
-              "name": "Sanusha Senarathna",
+
+              "name": "Sanusha Dilmin Senarathna",
+
+              "givenName": "Sanusha",
+
+              "familyName": "Senarathna",
+
               "url": "https://sanusha-senarathna.vercel.app",
+
               "image": "https://sanusha-senarathna.vercel.app/profile2.png",
-              "jobTitle": "Data Scientist & Full-Stack Developer",
+
+              "description": "Data Science undergraduate specializing in Machine Learning, AI, and modern web development.",
+
+              "jobTitle": "Data Science Undergraduate and AI/ML Developer",
+
+              "nationality": "Sri Lankan",
+
+              "knowsAbout": [
+                "Machine Learning",
+                "Artificial Intelligence",
+                "Python",
+                "JavaScript",
+                "FastAPI",
+                "Node.js",
+                "Java",
+                "Data Science"
+              ],
+
               "alumniOf": {
                 "@type": "EducationalOrganization",
                 "name": "SLIIT (Sri Lanka Institute of Information Technology)"
               },
+
               "sameAs": [
                 "https://github.com/itssxnu",
-                "https://linkedin.com/in/sanusha-senarathna"
+                "https://linkedin.com/in/sanusha-senarathna",
+                "https://x.com/sanusha_dilmin",
+                "https://www.instagram.com/its_sxnu?igsh=MWxrdHB3enV5aHZkaw%3D%3D&utm_source=qr",
+                "https://www.facebook.com/sxnusha?mibextid=wwXIfr&mibextid=wwXIfr"
               ],
+
               "address": {
                 "@type": "PostalAddress",
                 "addressLocality": "Colombo",
